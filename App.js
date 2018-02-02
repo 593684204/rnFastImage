@@ -100,8 +100,11 @@ export default class App extends Component<{}> {
         //this._flatList.scrollToOffset({ animated: true, offset: 2000 });
     };
 
-    onBtnPress2Botton=()=> {
+    onBtnPressBottomBotton=()=> {
         this._flatList.scrollToEnd();
+    }
+    onBtnPressTopBotton=()=>{
+        this._flatList.scrollToIndex({viewPosition: 0,index:0});
     }
     render() {
         return (
@@ -116,8 +119,8 @@ export default class App extends Component<{}> {
                                     onChangeText={(text) => this.setState({text})}
                                 />
                                 <Button title="跳转到行" onPress={()=>this.onButtonPress()} color={'skyblue'}/>
-                                <Button title="跳转到底部" onPress={()=>this.onBtnPress2Botton()} color={'green'}/>
-
+                                <Button title="跳转到底部" onPress={()=>this.onBtnPressBottomBotton()} color={'green'}/>
+                                <Button title="跳转到顶部" onPress={()=>this.onBtnPressTopBotton()} color={'blue'}/>
                             </View>
                             <FlatList
                                 data={this.state.data}
