@@ -117,36 +117,16 @@ export default class App extends Component<{}> {
     //点击按钮跳转
     onButtonPress=()=> {
         //viewPosition参数：0表示顶部，0.5表示中部，1表示底部
-        this._flatList.scrollToIndex({viewPosition: 0, index: this.state.text});
+        this._flatList.scrollToIndex({viewPosition: 0, index: parseInt(this.state.text)});
         //this._flatList.scrollToOffset({ animated: true, offset: 2000 });
     };
 
-    onBtnPress2Botton=()=> {
+    onBtnPressBottomBotton=()=> {
         this._flatList.scrollToEnd();
     }
- /* render() {
-    return (
-      <View style={styles.container}>
-          {
-              this.state.loading?
-                  <View>
-                      <Text style={styles.instructions}>{this.state.data.rows[0].schoolName}</Text>
-                      <FastImage
-                          style={{height:100,width:100}}
-                          source={{
-                              uri: this.state.data.rows[0].schoolLogoUrl,
-                              headers:{ Authorization: 'someAuthToken' },
-                              priority: FastImage.priority.normal,
-                          }}
-                          resizeMode={FastImage.resizeMode.contain}/>
-                      <Text onPress={()=>{this.setState({loading:false});this.fetchData()}}>刷新按钮</Text>
-                  </View>
-              :
-                  <Text style={styles.welcome}>正在加载中。。。</Text>
-          }
-      </View>
-    );
-  }*/
+    onBtnPressTopBotton=()=>{
+        this._flatList.scrollToIndex({viewPosition: 0, index: 0});
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -160,8 +140,8 @@ export default class App extends Component<{}> {
                                     onChangeText={(text) => this.setState({text})}
                                 />
                                 <Button title="跳转到行" onPress={()=>this.onButtonPress()} color={'skyblue'}/>
-                                <Button title="跳转到底部" onPress={()=>this.onBtnPress2Botton()} color={'green'}/>
-
+                                <Button title="跳转到底部" onPress={()=>this.onBtnPressBottomBotton()} color={'green'}/>
+                                <Button title="跳转到顶部" onPress={()=>this.onBtnPressTopBotton()} color={'blue'}/>
                             </View>
                             <FlatList
                                 data={this.state.data}
@@ -179,9 +159,9 @@ export default class App extends Component<{}> {
                                 getItemLayout={(data, index) => ( {length: 100, offset: (100 + 1) * index, index} )}
                                 //决定当距离内容最底部还有多远时触发onEndReached回调。
                                 //注意此参数是一个比值而非像素单位。比如，0.5表示距离内容最底部的距离为当前列表可见长度的一半时触发。
-                                onEndReachedThreshold={0.5}
+                                onEndReachedThreshold={0.1}
                                 //当列表被滚动到距离内容最底部不足onEndReachedThreshold的距离时调用
-                                onEndReached={({distanceFromEnd}) =>{this.getMoreData();}}
+                                onEndReached={this.getMoreData}
                                 refreshing={this.state.refreshing}
                                 onRefresh={() => {
                                     this.setState({refreshing: true})//开始刷新
@@ -195,7 +175,7 @@ export default class App extends Component<{}> {
                 }
                 {
                     this.state.opacityLoading?
-                        <View style={{width:Util.size.width,height:Util.size.height,backgroundColor:'pink',position:'absolute',top:0,left:0,justifyContent:'center',alignItems:'center'}}>
+                        <View style={{width:Util.size.width,height:Util.size.height,position:'absolute',top:0,left:0,justifyContent:'center',alignItems:'center'}}>
                             <Image source={require('./src/img/common/loading.gif')} resizeMode='contain' style={{width: 25, height:25} }  />
                         </View>
                     :
@@ -233,6 +213,7 @@ export default class App extends Component<{}> {
     };
     //获取更多数据
     getMoreData=()=> {
+        this.setState({opacityLoading:true});
         let baseUrl=' https://ssl.ygzykj.com:8480/sunsoft-supplier-app/school/selectSchoolIdAndSchoolInfo.json?token=ede28437d08995573ef74e1136391df0&versionCode=101.1.3&upPwsNum=0&versionType=10' +
             '&provinceRegionId=&cityRegionId=&districtRegionId=&schoolName=&pageNo='+(this.state.pageNo+1)+'&pageSize='+this.state.pageSize+'&status=00'
         let _q='';
@@ -249,7 +230,7 @@ export default class App extends Component<{}> {
                 console.log(_data);
                 this.setState((state)=>({
                     data:state.data.concat(_data.rows),
-                    loading:true,
+                    opacityLoading:false,
                     pageNo:state.pageNo+1
                 }));
             }
