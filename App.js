@@ -15,7 +15,8 @@ import {
     TextInput,
     Button,
     FlatList,
-    TouchableHighlight
+    TouchableHighlight,
+    Image
 } from 'react-native';
 
 export default class App extends Component<{}> {
@@ -47,7 +48,8 @@ export default class App extends Component<{}> {
             pageNo:1,
             pageSize:10,
             refreshing: false, //初始化不刷新
-            text: ''//跳转的行
+            text: '',//跳转的行
+            opacityLoading:false, //false时不显示true显示
         };
     };
     componentDidMount() {
@@ -190,6 +192,14 @@ export default class App extends Component<{}> {
                         </View>
                     :
                         <Text style={styles.welcome}>正在加载中。。。</Text>
+                }
+                {
+                    this.state.opacityLoading?
+                        <View style={{width:Util.size.width,height:Util.size.height,backgroundColor:'pink',position:'absolute',top:0,left:0,justifyContent:'center',alignItems:'center'}}>
+                            <Image source={require('./src/img/common/loading.gif')} resizeMode='contain' style={{width: 25, height:25} }  />
+                        </View>
+                    :
+                        null
                 }
             </View>
         );
