@@ -21,25 +21,6 @@ import {
 export default class App extends Component<{}> {
     constructor(props) {
         super(props);
-        /*this._sourceData = [
-            {name: '大护法'},
-            {name: '绣春刀II：修罗战场'},
-            {name: '神偷奶爸3'},
-            {name: '神奇女侠'},
-            {name: '摔跤吧，爸爸'},
-            {name: '悟空传'},
-            {name: '闪光少女'},
-            {name: '攻壳机动队'},
-            {name: '速度与激情8'},
-            {name: '蝙蝠侠大战超人'},
-            {name: '攻壳机动队'},
-            {name: '速度与激情8'},
-            {name: '蝙蝠侠大战超人'}
-        ]
-
-        this._newData = [{name: '我是新添加的数据1'},
-            {name: '我是新添加的数据2'},
-            {name: '我是新添加的数据3'}]*/
         this.state = {
             loading:false,
             data: [],
@@ -115,36 +96,13 @@ export default class App extends Component<{}> {
     //点击按钮跳转
     onButtonPress=()=> {
         //viewPosition参数：0表示顶部，0.5表示中部，1表示底部
-        this._flatList.scrollToIndex({viewPosition: 0, index: this.state.text});
+        this._flatList.scrollToIndex({viewPosition: 0, index: parseInt(this.state.text)});
         //this._flatList.scrollToOffset({ animated: true, offset: 2000 });
     };
 
     onBtnPress2Botton=()=> {
         this._flatList.scrollToEnd();
     }
- /* render() {
-    return (
-      <View style={styles.container}>
-          {
-              this.state.loading?
-                  <View>
-                      <Text style={styles.instructions}>{this.state.data.rows[0].schoolName}</Text>
-                      <FastImage
-                          style={{height:100,width:100}}
-                          source={{
-                              uri: this.state.data.rows[0].schoolLogoUrl,
-                              headers:{ Authorization: 'someAuthToken' },
-                              priority: FastImage.priority.normal,
-                          }}
-                          resizeMode={FastImage.resizeMode.contain}/>
-                      <Text onPress={()=>{this.setState({loading:false});this.fetchData()}}>刷新按钮</Text>
-                  </View>
-              :
-                  <Text style={styles.welcome}>正在加载中。。。</Text>
-          }
-      </View>
-    );
-  }*/
     render() {
         return (
             <View style={styles.container}>
