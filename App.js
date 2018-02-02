@@ -65,7 +65,14 @@ export default class App extends Component<{}> {
     }
 
     _footer = () => (
-        <Text style={{fontSize: 14, alignSelf: 'center'}}>到底啦，没有啦！</Text>
+        <View>
+            {
+                this.state.pageNo<Math.ceil(this.state.results/this.state.pageSize)?
+                    null
+                :
+                <Text style={{fontSize: 14, alignSelf: 'center'}}>到底啦，没有啦！</Text>
+            }
+        </View>
     )
 
     createEmptyView=()=> {
