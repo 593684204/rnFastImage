@@ -22,6 +22,7 @@ import {
 export default class App extends Component<{}> {
     constructor(props) {
         super(props);
+        //2018.03.01测试webStorm git配置
         /*this._sourceData = [
             {name: '大护法'},
             {name: '绣春刀II：修罗战场'},
